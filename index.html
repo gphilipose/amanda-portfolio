@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amanda Livermore: Remote Administrative &amp; Data Organization Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon: #63182A;
+    --maroon-deep: #47101D;
+    --toffee: #8B5B34;
+    --toffee-soft: #A67C52;
+    --cream: #F3E7D6;
+    --cream-light: #D6BAA3;
+    --burnt: #BE5A28;
+    --ink: #3B2618;
+    --ink-soft: #6B4E3A;
+    --line: rgba(59,38,24,0.22);
+    --font-display: "Fraunces", serif;
+    --font-body: "Inter", sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--burnt); color:var(--cream-light); }
+
+  a{ color:inherit; }
+  img,svg{ display:block; max-width:100%; }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- texture ---------- */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image: radial-gradient(rgba(59,38,24,0.05) 1px, transparent 1px);
+    background-size: 3px 3px;
+    opacity:0.5;
+    z-index:0;
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:40;
+    background:rgba(243,231,214,0.86);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 32px;
+    max-width:1080px;
+    margin:0 auto;
+  }
+  .mark{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.05rem;
+    letter-spacing:0.01em;
+    color:var(--maroon-deep);
+    text-decoration:none;
+  }
+  .mark svg{ width:22px; height:22px; }
+  nav ul{
+    list-style:none;
+    display:flex;
+    gap:28px;
+    margin:0;
+    padding:0;
+  }
+  nav ul a{
+    text-decoration:none;
+    font-size:0.92rem;
+    color:var(--ink-soft);
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  nav ul a:hover{ color:var(--maroon); border-color:var(--burnt); }
+  .nav-toggle{ display:none; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:88px 0 40px;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:24px;
+    align-items:center;
+    position:relative;
+    z-index:2;
+  }
+  .eyebrow{
+    font-family:var(--font-display);
+    font-style:italic;
+    font-weight:500;
+    color:var(--burnt);
+    font-size:1.05rem;
+    margin:0 0 14px;
+  }
+  h1.name{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(2.6rem, 5.2vw, 4rem);
+    line-height:1.03;
+    margin:0 0 18px;
+    color:var(--maroon-deep);
+  }
+  .hero p.role{
+    font-size:1.18rem;
+    color:var(--ink-soft);
+    max-width:46ch;
+    margin:0 0 28px;
+  }
+  .hero-actions{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 24px;
+    font-family:var(--font-body);
+    font-weight:500;
+    font-size:0.95rem;
+    text-decoration:none;
+    border-radius:2px;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary{
+    background:var(--maroon);
+    color:var(--cream-light);
+  }
+  .btn-primary:hover{ background:var(--maroon-deep); }
+  .btn-ghost{
+    border:1px solid var(--ink);
+    color:var(--ink);
+  }
+  .btn-ghost:hover{ border-color:var(--burnt); color:var(--burnt); }
+
+  /* ---------- hero garden ---------- */
+  .garden{
+    position:relative;
+    height:420px;
+  }
+  .hero-flower{
+    position:absolute;
+    width:190px;
+    overflow:visible;
+  }
+  .hero-flower.f1{ left:8%;  bottom:0;   width:230px; }
+  .hero-flower.f2{ left:52%; bottom:10px; width:160px; }
+  .hero-flower.f3{ left:74%; bottom:-6px; width:120px; }
+  .flower-tilt{ transform-origin:100px 320px; will-change:transform; }
+  .petal{ transition:none; }
+
+  .petal-drift{
+    position:absolute;
+    top:-24px;
+    pointer-events:none;
+    opacity:0.85;
+    animation:drift linear infinite;
+  }
+  @keyframes drift{
+    from{ transform:translate(var(--dx0,0), -10px) rotate(0deg); }
+    to{ transform:translate(var(--dx1,40px), 460px) rotate(340deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .petal-drift{ animation:none; display:none; }
+  }
+
+  /* ---------- cursor flower trail ---------- */
+  .cursor-bloom{
+    position:fixed;
+    top:0;
+    left:0;
+    width:20px;
+    pointer-events:none;
+    z-index:999;
+    transform:translate(var(--x), var(--y)) translate(-50%,-50%) scale(0.3) rotate(var(--r0));
+    opacity:0.95;
+    animation:bloomFloat 1000ms ease-out forwards;
+  }
+  @keyframes bloomFloat{
+    0%{ transform:translate(var(--x), var(--y)) translate(-50%,-50%) scale(0.2) rotate(var(--r0)); opacity:0.95; }
+    30%{ opacity:0.95; }
+    100%{
+      transform:translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy)))
+                translate(-50%,-50%) scale(0.9) rotate(var(--r1));
+      opacity:0;
+    }
+  }
+
+  /* ---------- sprig divider ---------- */
+  .sprig{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:0 0 34px;
+    color:var(--toffee);
+  }
+  .sprig .rule{ flex:1; height:1px; background:var(--line); }
+
+  /* ---------- sections ---------- */
+  section{
+    position:relative;
+    z-index:1;
+    padding:64px 0;
+  }
+  section.alt{ background:var(--cream-light); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+
+  h2.section-title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(1.7rem, 3vw, 2.3rem);
+    color:var(--maroon-deep);
+    margin:0 0 8px;
+  }
+  .section-sub{
+    color:var(--ink-soft);
+    max-width:62ch;
+    margin:0 0 40px;
+    font-size:1.02rem;
+  }
+
+  /* summary specimen sheet */
+  .about-grid{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    gap:44px;
+    align-items:start;
+  }
+  .portrait-frame{
+    position:relative;
+  }
+  .portrait-frame img{
+    display:block;
+    width:100%;
+    height:400px;
+    object-fit:cover;
+    object-position:center 22%;
+    border:6px solid var(--cream-light);
+    box-shadow:0 0 0 2px var(--maroon), 0 18px 34px rgba(71,16,29,0.22);
+  }
+  .portrait-accent{
+    position:absolute;
+    right:-16px;
+    bottom:-16px;
+    width:44px;
+    height:44px;
+    z-index:2;
+  }
+  .specimen{
+    position:relative;
+    background:var(--cream-light);
+    border:1px solid var(--line);
+    padding:34px 36px;
+  }
+  .specimen::before, .specimen::after,
+  .corner-tl, .corner-br{
+    content:"";
+    position:absolute;
+    width:16px; height:16px;
+    border-color:var(--maroon);
+    border-style:solid;
+  }
+  .specimen::before{ top:-1px; left:-1px; border-width:1px 0 0 1px; }
+  .specimen::after{ bottom:-1px; right:-1px; border-width:0 1px 1px 0; }
+  .specimen p{ margin:0; font-size:1.05rem; color:var(--ink); }
+  .specimen .tag{
+    font-family:var(--font-display);
+    font-style:italic;
+    color:var(--burnt);
+    font-size:0.95rem;
+    display:block;
+    margin-bottom:14px;
+  }
+
+  /* skills catalog */
+  .catalog{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .catalog-item{
+    background:var(--cream-light);
+    padding:26px 24px;
+    position:relative;
+  }
+  .catalog-item .no{
+    font-family:var(--font-display);
+    font-style:italic;
+    color:var(--toffee-soft);
+    font-size:0.85rem;
+    display:block;
+    margin-bottom:10px;
+  }
+  .catalog-item h3{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.08rem;
+    margin:0 0 8px;
+    color:var(--maroon-deep);
+  }
+  .catalog-item p{
+    margin:0;
+    font-size:0.94rem;
+    color:var(--ink-soft);
+  }
+
+  /* experience record */
+  .record{
+    border-left:2px solid var(--toffee-soft);
+    padding-left:32px;
+    max-width:760px;
+    position:relative;
+  }
+  .record::before{
+    content:"";
+    position:absolute;
+    left:-6px; top:6px;
+    width:10px; height:10px;
+    background:var(--burnt);
+    border-radius:50%;
+  }
+  .record h3{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.35rem;
+    color:var(--maroon-deep);
+    margin:0 0 2px;
+  }
+  .record .meta{
+    color:var(--ink-soft);
+    font-size:0.93rem;
+    margin-bottom:16px;
+  }
+  .record ul{ margin:0; padding-left:20px; }
+  .record li{ margin-bottom:10px; color:var(--ink); }
+  .record li::marker{ color:var(--burnt); }
+
+  /* education + achievements */
+  .grid-two{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+  }
+  .card{
+    background:var(--cream-light);
+    border:1px solid var(--line);
+    padding:28px;
+  }
+  .card h3{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.15rem;
+    color:var(--maroon-deep);
+    margin:0 0 4px;
+  }
+  .card .meta{ color:var(--ink-soft); font-size:0.9rem; margin-bottom:14px; }
+  .card ul{ margin:0; padding-left:18px; }
+  .card li{ margin-bottom:8px; font-size:0.95rem; }
+
+  /* contact */
+  footer{
+    padding:70px 0 60px;
+    text-align:center;
+  }
+  footer h2{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(1.8rem, 3.4vw, 2.4rem);
+    color:var(--maroon-deep);
+    margin:0 0 14px;
+  }
+  footer p{ color:var(--ink-soft); max-width:46ch; margin:0 auto 28px; }
+  .contact-row{
+    display:flex;
+    justify-content:center;
+    gap:26px;
+    flex-wrap:wrap;
+    font-size:0.98rem;
+  }
+  .contact-row a{ text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; }
+  .contact-row a:hover{ border-color:var(--burnt); color:var(--burnt); }
+  .foot-note{ margin-top:40px; font-size:0.82rem; color:var(--toffee-soft); }
+
+  @media (max-width: 860px){
+    .hero .wrap{ grid-template-columns:1fr; }
+    .garden{ height:300px; margin-top:20px; }
+    .grid-two{ grid-template-columns:1fr; }
+    .about-grid{ grid-template-columns:1fr; }
+    .portrait-frame{ max-width:320px; }
+    nav ul{ gap:16px; }
+    nav ul li:nth-child(4){ display:none; }
+  }
+  @media (max-width: 560px){
+    nav ul{ display:none; }
+    .wrap{ padding:0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="mark" href="#top">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="#BE5A28"/><g fill="#63182A"><ellipse cx="12" cy="5" rx="3" ry="5"/><ellipse cx="12" cy="19" rx="3" ry="5"/><ellipse cx="5" cy="12" rx="5" ry="3"/><ellipse cx="19" cy="12" rx="5" ry="3"/></g></svg>
+      Amanda Livermore
+    </a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Remote Virtual Assistant · Administrative &amp; Data Organization Support</p>
+        <h1 class="name">Amanda<br>Livermore</h1>
+        <p class="role">I bring order to inboxes, calendars, and daily operations, the kind of quiet organization that keeps a business running on time, every time.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">Get in touch</a>
+          <a class="btn btn-ghost" href="#experience">See my experience</a>
+        </div>
+      </div>
+
+      <div class="garden" id="garden">
+        <svg class="hero-flower f1" viewBox="0 0 200 320" aria-hidden="true">
+          <g class="flower-tilt">
+            <path d="M100 320 C 95 250, 105 190, 100 120" stroke="#8B5B34" stroke-width="4" fill="none"/>
+            <path d="M100 230 C 70 225, 55 205, 50 185 C 78 188, 95 205, 100 230 Z" fill="#8B5B34"/>
+            <path d="M100 190 C 130 183, 148 165, 152 148 C 122 152, 105 168, 100 190 Z" fill="#A67C52"/>
+            <g class="head">
+              <g transform="translate(100,95)">
+                <ellipse rx="20" ry="42" transform="rotate(0)" fill="#BE5A28"/>
+                <ellipse rx="20" ry="42" transform="rotate(45)" fill="#BE5A28"/>
+                <ellipse rx="20" ry="42" transform="rotate(90)" fill="#63182A"/>
+                <ellipse rx="20" ry="42" transform="rotate(135)" fill="#BE5A28"/>
+                <ellipse rx="20" ry="42" transform="rotate(180)" fill="#63182A"/>
+                <ellipse rx="20" ry="42" transform="rotate(225)" fill="#BE5A28"/>
+                <ellipse rx="20" ry="42" transform="rotate(270)" fill="#63182A"/>
+                <ellipse rx="20" ry="42" transform="rotate(315)" fill="#BE5A28"/>
+                <circle r="17" fill="#47101D"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+
+        <svg class="hero-flower f2" viewBox="0 0 200 320" aria-hidden="true">
+          <g class="flower-tilt">
+            <path d="M100 320 C 104 260, 96 200, 100 130" stroke="#8B5B34" stroke-width="3" fill="none"/>
+            <path d="M100 240 C 125 236, 138 220, 142 205 C 118 208, 104 222, 100 240 Z" fill="#A67C52"/>
+            <g class="head">
+              <g transform="translate(100,100)">
+                <ellipse rx="16" ry="34" transform="rotate(0)" fill="#63182A"/>
+                <ellipse rx="16" ry="34" transform="rotate(60)" fill="#BE5A28"/>
+                <ellipse rx="16" ry="34" transform="rotate(120)" fill="#63182A"/>
+                <ellipse rx="16" ry="34" transform="rotate(180)" fill="#BE5A28"/>
+                <ellipse rx="16" ry="34" transform="rotate(240)" fill="#63182A"/>
+                <ellipse rx="16" ry="34" transform="rotate(300)" fill="#BE5A28"/>
+                <circle r="13" fill="#8B5B34"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+
+        <svg class="hero-flower f3" viewBox="0 0 200 320" aria-hidden="true">
+          <g class="flower-tilt">
+            <path d="M100 320 C 97 270, 103 220, 100 160" stroke="#8B5B34" stroke-width="3" fill="none"/>
+            <g class="head">
+              <g transform="translate(100,120)">
+                <ellipse rx="13" ry="28" transform="rotate(0)" fill="#BE5A28"/>
+                <ellipse rx="13" ry="28" transform="rotate(72)" fill="#63182A"/>
+                <ellipse rx="13" ry="28" transform="rotate(144)" fill="#BE5A28"/>
+                <ellipse rx="13" ry="28" transform="rotate(216)" fill="#63182A"/>
+                <ellipse rx="13" ry="28" transform="rotate(288)" fill="#BE5A28"/>
+                <circle r="10" fill="#47101D"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="sprig">
+        <svg width="26" height="18" viewBox="0 0 26 18"><path d="M2 16 C 8 10, 16 8, 24 2" stroke="#8B5B34" stroke-width="1.5" fill="none"/><circle cx="24" cy="2" r="3" fill="#BE5A28"/></svg>
+        <span style="font-family:var(--font-display); font-style:italic; font-size:0.95rem;">Field notes</span>
+        <div class="rule"></div>
+      </div>
+      <h2 class="section-title">About</h2>
+      <p class="section-sub">A short summary of how I work and what I'm looking for next.</p>
+      <div class="about-grid">
+        <div class="portrait-frame">
+          <img src="amanda-photo.jpg" alt="Portrait of Amanda Livermore">
+          <svg class="portrait-accent" viewBox="0 0 34 34" aria-hidden="true">
+            <g transform="translate(17,17)">
+              <ellipse rx="7" ry="14" transform="rotate(0)" fill="#BE5A28"/>
+              <ellipse rx="7" ry="14" transform="rotate(72)" fill="#63182A"/>
+              <ellipse rx="7" ry="14" transform="rotate(144)" fill="#BE5A28"/>
+              <ellipse rx="7" ry="14" transform="rotate(216)" fill="#63182A"/>
+              <ellipse rx="7" ry="14" transform="rotate(288)" fill="#BE5A28"/>
+              <circle r="5.5" fill="#47101D"/>
+            </g>
+          </svg>
+        </div>
+        <div class="specimen">
+          <span class="tag">Summary · filed May 2023 to present</span>
+          <p>I've spent three-plus years managing customer communications, scheduling, and administrative detail in a fast-paced retail environment, building strong habits in digital organization: sorting and prioritizing high volumes of messages, tracking deadlines across systems, and keeping small daily operations running without anything slipping through. I'm comfortable across CRM and productivity software, and I'm looking to bring that same reliability to a remote role focused on organizing a client's inbox, calendar, and day-to-day operations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="skills">
+    <div class="wrap">
+      <div class="sprig">
+        <svg width="26" height="18" viewBox="0 0 26 18"><path d="M2 16 C 8 10, 16 8, 24 2" stroke="#8B5B34" stroke-width="1.5" fill="none"/><circle cx="24" cy="2" r="3" fill="#BE5A28"/></svg>
+        <span style="font-family:var(--font-display); font-style:italic; font-size:0.95rem;">Catalog</span>
+        <div class="rule"></div>
+      </div>
+      <h2 class="section-title">Skills</h2>
+      <p class="section-sub">The tools and habits I rely on to keep operations organized.</p>
+      <div class="catalog">
+        <div class="catalog-item">
+          <span class="no">No. 01</span>
+          <h3>Email &amp; inbox management</h3>
+          <p>Sorting, prioritizing, and responding to high volumes of customer messages and phone inquiries.</p>
+        </div>
+        <div class="catalog-item">
+          <span class="no">No. 02</span>
+          <h3>Scheduling &amp; calendar coordination</h3>
+          <p>Managing pickup timing and appointment scheduling for accurate, on-time fulfillment.</p>
+        </div>
+        <div class="catalog-item">
+          <span class="no">No. 03</span>
+          <h3>CRM &amp; help desk software</h3>
+          <p>Salesforce, Zoho, and Zendesk.</p>
+        </div>
+        <div class="catalog-item">
+          <span class="no">No. 04</span>
+          <h3>Productivity tools</h3>
+          <p>Microsoft Office (Word, Excel, PowerPoint, Teams, Outlook) and Google Workspace (Docs, Sheets, Slides).</p>
+        </div>
+        <div class="catalog-item">
+          <span class="no">No. 05</span>
+          <h3>Communication platforms</h3>
+          <p>Zoom, phone, and email-based client support.</p>
+        </div>
+        <div class="catalog-item">
+          <span class="no">No. 06</span>
+          <h3>Data entry &amp; accuracy</h3>
+          <p>Precise order processing and transaction handling, with close attention to detail.</p>
+        </div>
+        <div class="catalog-item">
+          <span class="no">No. 07</span>
+          <h3>Python &amp; independent work</h3>
+          <p>Intermediate Python, plus strong time management and adaptability working unsupervised.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="sprig">
+        <svg width="26" height="18" viewBox="0 0 26 18"><path d="M2 16 C 8 10, 16 8, 24 2" stroke="#8B5B34" stroke-width="1.5" fill="none"/><circle cx="24" cy="2" r="3" fill="#BE5A28"/></svg>
+        <span style="font-family:var(--font-display); font-style:italic; font-size:0.95rem;">Record</span>
+        <div class="rule"></div>
+      </div>
+      <h2 class="section-title">Experience</h2>
+      <p class="section-sub">Where I built these organizational habits.</p>
+      <div class="record">
+        <h3>Retail Sales Associate</h3>
+        <div class="meta">Office Depot · Tacoma, WA &amp; McKinney, TX &nbsp;·&nbsp; May 2023 – Present</div>
+        <ul>
+          <li>I manage a high volume of customer communications daily via phone, email, and in person, organizing and prioritizing requests to ensure timely, accurate responses and building the inbox and queue management habits relevant to remote administrative work.</li>
+          <li>I coordinate scheduling for online order pickups and print center jobs, tracking deadlines and customer timelines to keep fulfillment on schedule.</li>
+          <li>I process transactions and resolve customer concerns through POS and CRM systems, maintaining accuracy and a professional, friendly tone under time pressure.</li>
+          <li>I create custom print orders for business clients by interpreting detailed instructions and translating them into finished deliverables, a workflow similar to executing tasks delegated by a remote client.</li>
+          <li>I've built a reputation for reliability and independent problem-solving, consistently maintaining client satisfaction and repeat business.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="education">
+    <div class="wrap">
+      <div class="sprig">
+        <svg width="26" height="18" viewBox="0 0 26 18"><path d="M2 16 C 8 10, 16 8, 24 2" stroke="#8B5B34" stroke-width="1.5" fill="none"/><circle cx="24" cy="2" r="3" fill="#BE5A28"/></svg>
+        <span style="font-family:var(--font-display); font-style:italic; font-size:0.95rem;">Education &amp; recognition</span>
+        <div class="rule"></div>
+      </div>
+      <h2 class="section-title">Education &amp; Achievements</h2>
+      <div class="grid-two">
+        <div class="card">
+          <h3>A.A.S. in Paralegal Studies</h3>
+          <div class="meta">Highline College, Des Moines, WA · Sept. 2025 – June 2027 (in progress, paused after residency change)</div>
+        </div>
+        <div class="card">
+          <h3>High School Diploma</h3>
+          <div class="meta">Decatur High School, Federal Way, WA · Sept. 2019 – June 2023 · 4.00 GPA</div>
+        </div>
+      </div>
+      <div class="grid-two" style="margin-top:28px;">
+        <div class="card">
+          <h3>Washington State Honors Award</h3>
+          <div class="meta">Class of 2023</div>
+          <p style="margin:0; font-size:0.95rem; color:var(--ink);">I was recognized for outstanding academic achievement, ranking in the top 10% of the Washington State graduating class.</p>
+        </div>
+        <div class="card">
+          <h3>Graduated 4.00 GPA</h3>
+          <div class="meta">18th of 257 students</div>
+          <p style="margin:0; font-size:0.95rem; color:var(--ink);">My class rank reflects consistent academic performance across all four years.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="wrap">
+      <h2>Let's talk about the role</h2>
+      <p>I'm looking for a remote position centered on organizing inboxes, calendars, and day-to-day operations. I'd be happy to walk through how these habits translate to your team.</p>
+      <div class="contact-row">
+        <a href="mailto:a.r.livermore05@gmail.com">a.r.livermore05@gmail.com</a>
+        <a href="tel:+19452808834">(945) 280-8834</a>
+        <a href="https://linkedin.com/in/amanda-livermore-587524365" target="_blank" rel="noopener">linkedin.com/in/amanda-livermore</a>
+        <span>McKinney, TX</span>
+      </div>
+      <div class="foot-note">Amanda Livermore · remote administrative &amp; data organization support</div>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- floating petals in hero ----
+  var garden = document.getElementById('garden');
+  if(garden && !reduceMotion){
+    var petalCount = 10;
+    for(var i=0;i<petalCount;i++){
+      var p = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      p.setAttribute('viewBox','0 0 20 20');
+      p.setAttribute('width', (10 + Math.random()*10).toFixed(0));
+      p.classList.add('petal-drift');
+      var ell = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+      ell.setAttribute('cx','10'); ell.setAttribute('cy','10');
+      ell.setAttribute('rx','4'); ell.setAttribute('ry','9');
+      var colors = ['#BE5A28','#63182A','#A67C52'];
+      ell.setAttribute('fill', colors[i % colors.length]);
+      p.appendChild(ell);
+      p.style.left = (Math.random()*90) + '%';
+      p.style.setProperty('--dx0', (Math.random()*20-10) + 'px');
+      p.style.setProperty('--dx1', (Math.random()*80-40) + 'px');
+      p.style.animationDuration = (9 + Math.random()*7) + 's';
+      p.style.animationDelay = (Math.random()*10) + 's';
+      garden.appendChild(p);
+    }
+  }
+
+  // ---- tiny flowers trail the cursor across the page ----
+  if(!reduceMotion){
+    var lastBloom = 0;
+    var bloomColors = ['#BE5A28', '#63182A', '#8B5B34'];
+
+    function spawnBloom(x, y){
+      var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg.setAttribute('viewBox','0 0 34 34');
+      svg.classList.add('cursor-bloom');
+      var color = bloomColors[Math.floor(Math.random()*bloomColors.length)];
+      var r0 = Math.random()*360;
+      var r1 = r0 + (Math.random()*70 - 35);
+      svg.style.setProperty('--x', x + 'px');
+      svg.style.setProperty('--y', y + 'px');
+      svg.style.setProperty('--r0', r0 + 'deg');
+      svg.style.setProperty('--r1', r1 + 'deg');
+      svg.style.setProperty('--dx', (Math.random()*30 - 15) + 'px');
+      svg.style.setProperty('--dy', (-28 - Math.random()*24) + 'px');
+      svg.innerHTML =
+        '<g transform="translate(17,17)">' +
+        '<ellipse rx="7" ry="14" transform="rotate(0)" fill="' + color + '"/>' +
+        '<ellipse rx="7" ry="14" transform="rotate(72)" fill="' + color + '"/>' +
+        '<ellipse rx="7" ry="14" transform="rotate(144)" fill="' + color + '"/>' +
+        '<ellipse rx="7" ry="14" transform="rotate(216)" fill="' + color + '"/>' +
+        '<ellipse rx="7" ry="14" transform="rotate(288)" fill="' + color + '"/>' +
+        '<circle r="5" fill="#47101D"/>' +
+        '</g>';
+      document.body.appendChild(svg);
+      svg.addEventListener('animationend', function(){ svg.remove(); });
+    }
+
+    window.addEventListener('mousemove', function(e){
+      var now = Date.now();
+      if(now - lastBloom > 90){
+        lastBloom = now;
+        spawnBloom(e.clientX, e.clientY);
+      }
+    }, { passive:true });
+  }
+
+  // ---- flowers turn toward the cursor ----
+  var flowers = Array.prototype.slice.call(document.querySelectorAll('.hero-flower'));
+  if(!flowers.length) return;
+
+  var state = flowers.map(function(el){
+    return { el: el, tilt: el.querySelector('.flower-tilt'), current: 0, target: 0 };
+  });
+
+  var maxTilt = 16;       // degrees
+  var influence = 420;    // px, horizontal distance for full tilt
+
+  function updateTargets(mouseX){
+    state.forEach(function(s){
+      var rect = s.el.getBoundingClientRect();
+      var cx = rect.left + rect.width/2;
+      var dx = mouseX - cx;
+      var norm = Math.max(-1, Math.min(1, dx / influence));
+      s.target = norm * maxTilt;
+    });
+  }
+
+  if(!reduceMotion){
+    window.addEventListener('mousemove', function(e){
+      updateTargets(e.clientX);
+    }, { passive:true });
+
+    function loop(){
+      state.forEach(function(s){
+        s.current += (s.target - s.current) * 0.07;
+        s.tilt.style.transform = 'rotate(' + s.current.toFixed(2) + 'deg)';
+      });
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    // gentle idle sway when there's no mouse input yet (touch devices)
+    var lastMove = Date.now();
+    window.addEventListener('mousemove', function(){ lastMove = Date.now(); }, { passive:true });
+    setInterval(function(){
+      if(Date.now() - lastMove > 1500){
+        var t = Date.now()/1400;
+        state.forEach(function(s, i){
+          s.target = Math.sin(t + i) * 6;
+        });
+      }
+    }, 50);
+  }
+})();
+</script>
+
+</body>
+</html>
